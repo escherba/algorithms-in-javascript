@@ -6,6 +6,7 @@ Collection of computer science algorithms and data structures written in JavaScr
 
 * QuickSort - [info](http://en.wikipedia.org/wiki/Quick_sort) | [source](https://github.com/idosela/algorithms-in-javascript/blob/master/src/quick-sort.js)
 * MergeSort - [info](http://en.wikipedia.org/wiki/Merge_sort) | [source](https://github.com/idosela/algorithms-in-javascript/blob/master/src/merge-sort.js)
+* AdpativeSort - [info](http://penguin.ewu.edu/~trolfe/NaturalMerge/NatMerge.html) | [source](https://github.com/idosela/algorithms-in-javascript/blob/master/src/adaptive-sort.js)
 * BubbleSort - [info](http://en.wikipedia.org/wiki/Bubble_sort) | [source](https://github.com/idosela/algorithms-in-javascript/blob/master/src/bubble-sort.js)
 * InsertionSort - [info](http://en.wikipedia.org/wiki/Insertion_sort) | [source](https://github.com/idosela/algorithms-in-javascript/blob/master/src/insertion-sort.js)
 * SelectionSort - [info](http://en.wikipedia.org/wiki/Selection_sort) | [source](https://github.com/idosela/algorithms-in-javascript/blob/master/src/selection-sort.js)
