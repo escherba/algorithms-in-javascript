@@ -157,16 +157,16 @@
                     }
                     // Last pair is special (treatment depends on the initial parity of j,
                     // which is the same as the current parity of lim).
-                    if (k < lim + 1) {
+                    if (k > lim) {
+                        // k === lim + 1: lim is odd, j was odd
+                        arr[j] = arr[k];
+                    } else {
                         // k < lim + 1: lim is even, j was even
                         left = arr[k]; 
                         right = arr[k + 1];
                         arr[j] = merge_chains(left, right);
                         left.length = 0;
                         right.length = 0;
-                    } else {
-                        // k === lim + 1: lim is odd, j was odd
-                        arr[j] = arr[k];
                     }
                 }
                 arr.length = 1;
