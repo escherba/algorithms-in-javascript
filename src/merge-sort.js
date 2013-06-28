@@ -51,7 +51,7 @@
             var middle = Math.floor(arr.length / 2);
             var left = arr.slice(0, middle);
             var right = arr.slice(middle);
-            return merge(mergeSort(left), mergeSort(right));
+            return merge(sort(left), sort(right));
         }
 
         return aij.isSortable(items) ? sort(items) : items;
