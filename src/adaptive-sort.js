@@ -169,16 +169,15 @@
                         arr[j] = arr[k];
                     }
                 }
-                // As an alternative to the following block, perform the two lines
-                // below if destructive sorting is okay:
-                //
-                //arr.length = 1;
-                //arr = arr.shift();
-                //
                 arr.length = 1;
-                var subarray = arr.shift();
-                arr.push.apply(arr, subarray);
-                subarray.length = 0;
+
+                // destructive version
+                arr = arr.shift();
+
+                // non-destructive version
+                //var subarray = arr.shift();
+                //arr.push.apply(arr, subarray);
+                //subarray.length = 0;
             }
             return arr;
         }
