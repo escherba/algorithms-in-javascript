@@ -41,7 +41,8 @@
         };
 
         // Initiate QuickSort on the input array.
-        return aij.isSortable(items) && partition(items, 0, items.length) || items;
+        //return aij.isSortable(items) && partition(items, 0, items.length) || items;
+        return partition(items, 0, items.length) || items;
     };
 
 })();

@@ -26,6 +26,7 @@
         };
 
         // Initiate BubbleSort on the input array.
-        return aij.isSortable(items) ? sort(items) : items;
+        //return aij.isSortable(items) ? sort(items) : items;
+        return sort(items);
     };
 })();

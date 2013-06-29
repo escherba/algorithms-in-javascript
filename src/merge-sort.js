@@ -55,7 +55,8 @@
             return merge(sort(left), sort(right));
         }
 
-        return aij.isSortable(items) ? sort(items) : items;
+        //return aij.isSortable(items) ? sort(items) : items;
+        return sort(items);
 
     };
 
