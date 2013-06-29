@@ -11,7 +11,7 @@ Collection of computer science algorithms and data structures written in JavaScr
 * InsertionSort - [info](http://en.wikipedia.org/wiki/Insertion_sort) | [source](https://github.com/escherba/algorithms-in-javascript/blob/master/src/insertion-sort.js)
 * SelectionSort - [info](http://en.wikipedia.org/wiki/Selection_sort) | [source](https://github.com/escherba/algorithms-in-javascript/blob/master/src/selection-sort.js)
 
-[Run the sort performence test suite.](http://jsperf.com/sort-algorithms/19)
+[Run the sort performence test suite.](http://jsperf.com/sort-algorithms/21)
 
 ## Binary Search Tree
 
