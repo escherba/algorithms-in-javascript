@@ -121,9 +121,9 @@
                 terminus = f(arr, k, len);
                 if (terminus - k > 1) {
                     tmp.push(
-                        (f === find_strict_rchain) 
-                        ? arr.slice(k, terminus).reverse() 
-                        : arr.slice(k, terminus)
+                        (f === find_strict_rchain) ? 
+                        arr.slice(k, terminus).reverse() : 
+                        arr.slice(k, terminus)
                     );
                 } else if (f === find_strict_rchain) {
                     /* searched for a reverse chain and found none:
@@ -149,7 +149,7 @@
         function chain_join(tmp) {
             // Step 2: join all chains
             var j = tmp.length;
-            if (j == 0) { return tmp; }
+            if (j < 1) { return tmp; }
 
             //for (; j > 1; tmp.length = j) {
             while (j > 1) {
@@ -186,4 +186,5 @@
         //return aij.isSortable(items) ? sort(items) : items;
         return sort(items);
     };
+
 })();
