@@ -156,8 +156,8 @@
             var j = tmp.length;
             if (j < 1) { return tmp; }
 
-            //for (; j > 1; tmp.length = j) {
-            while (j > 1) {
+            //while (j > 1) {
+            for (; j > 1; tmp.length = j) {
                 var k, lim = j - 2;
                 // At this point, lim == tmp.length - 2, so tmp[k + 1]
                 // is always defined for any k in [0, lim)
@@ -169,7 +169,7 @@
                 tmp[j++] = (k > lim) ? tmp[k] : merge(tmp[k], tmp[k + 1]);
             }
             var result = tmp.shift();
-            tmp.length = 0;
+            //tmp.length = 0;
             return result;
         }
 
@@ -180,7 +180,7 @@
 
             // mutable (standard) version -- store result in-place
             //var result = chain_join(chain_unit(arr));
-            //for (k = 0; k < len; k++) {
+            //for (var k = 0, len = arr.length; k < len; k++) {
             //    arr[k] = result[k];
             //}
             //result.length = 0;
