@@ -118,9 +118,10 @@
             * Always expect data in reverse order with respect to the one specified
             */
 
+            var k;
             var temp = [];
             var f = find_strict_rchain;
-            for (var k = 0; k < len; k = term) {
+            for (k = 0; k < len; k = term) {
                 // try to find a chain (ordered sequence of at least
                 // two elements) using a default function first:
 
