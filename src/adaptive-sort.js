@@ -150,7 +150,7 @@
             //for (var j = temp.length; j > 1; temp.length = j) {
             for (var j = temp.length; j > 1; ) {
                 var lim = j - 2;
-                // At this point, lim == arr.length - 2, so arr[k + 1]
+                // At this point, lim == temp.length - 2, so temp[k + 1]
                 // is always defined for any k in [0, lim)
                 for (j = 0, k = 0; k < lim; k = j << 1) {
                     temp[j++] = merge(temp[k], temp[k + 1]);
