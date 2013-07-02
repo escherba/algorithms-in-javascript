@@ -1,5 +1,8 @@
 (function(){
+    /*jshint bitwise: false*/
+    /*jshint noempty: false*/
     "use strict";
+
     /**
     * Sorts an array of integers using the AdaptiveSort algorithm.
     * @param {Array.<number>} items Array of items to be sorted.
