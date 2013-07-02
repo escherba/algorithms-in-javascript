@@ -25,7 +25,7 @@
         * performance should be close to optimal.
         */
 
-        function destructive_merge(left, right) {
+        function merge(left, right) {
             /*
             * Given two ordered arrays (chains), returns a new 
             * array containing an ordered union of the input chains.
@@ -149,36 +149,26 @@
             }
 
             // Step 2: merge everything
-            for (var lim = j - 2; lim >= 0;) {
-                console.log(lim);
-                //temp.length = j;
+            for (var lim = j - 2; lim >= 0; lim = j - 1) {
                 // At this point, lim == arr.length - 2, so arr[k + 1]
                 // is always defined for any k in [0, lim)
-                for (k = 0; k < lim; k += 2){
-                    temp[k >> 1] = destructive_merge(temp[k], temp[k + 1]);
+                for (j = 0, k = 0; k < lim; k = ++j << 1) {
+                    temp[j] = merge(temp[k], temp[k + 1]);
                 }
-                // Last pair is special (its treatment depends on the initial parity of j,
-                // which is the same as the current parity of lim).
-                var t = k >> 1;
-                if (k > lim) {
-                    // k === lim + 1: lim is odd, j was odd
-                    temp[t] = temp[k];
-                } else {
-                    // k < lim + 1: lim is even, j was even
-                    temp[t] = destructive_merge(temp[k], temp[k + 1]);
-                }
-                lim = t - 1;
+                // Last pair is special -- its treatment depends on the initial 
+                // parity of j, which is the same as the current parity of lim).
+                temp[j] = (k > lim) ? temp[k] : merge(temp[k], temp[k + 1]);
             }
-            //temp.length = 1;
             var result = temp.shift();
             temp.length = 0;
+            return result;
 
             //in-place (destructive) version:
             //for (j = 0; j < len; j++) {
             //    arr[j] = result[j];
             //}
-
-            return result;
+            //result.length = 0;
+            //return arr;
         }
 
         // Initiate AdaptiveSort on the input array.
