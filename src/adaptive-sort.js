@@ -1,8 +1,8 @@
 (function(){
     /*jshint bitwise: false*/
     /*jshint noempty: false*/
-    "use strict";
 
+    "use strict";
     /**
     * Sorts an array of integers using the AdaptiveSort algorithm.
     * @param {Array.<number>} items Array of items to be sorted.
@@ -38,9 +38,9 @@
             left_val,
             right_val,
             result;
-            if (left[left_len - 1]<=(right_val = right[0])) {
+            if (left[left_len - 1] <= (right_val = right[0])) {
                 result = left.concat(right);
-            } else if (right[right_len - 1]<(left_val = left[0])) {
+            } else if (right[right_len - 1] < (left_val = left[0])) {
                 result = right.concat(left);
             } else {
                 /* By this point, we know that the left and the right
@@ -50,7 +50,7 @@
                 result = new Array(left_len + right_len);
                 var i = 0, k = 0, h = 0;
                 while (true) {
-                    if (right_val<left_val) {
+                    if (right_val < left_val) {
                         result[i++] = right_val;
                         if (++h < right_len) {
                             right_val = right[h];
@@ -91,7 +91,8 @@
             var tmp, succ;
             for (tmp = arr[offset];
                 ++offset < limit && tmp<=(succ = arr[offset]);
-            tmp = succ) {}
+                tmp = succ
+            ) {}
             return offset;
         }
 
@@ -104,8 +105,9 @@
             */
             var tmp, succ;
             for (tmp = arr[offset];
-                ++offset < limit && (succ = arr[offset])<tmp;
-            tmp = succ) {}
+                ++offset < limit && (succ = arr[offset]) < tmp;
+                tmp = succ
+            ) {}
             return offset;
         }
 
