@@ -90,7 +90,7 @@
             */
             var tmp, succ;
             for (tmp = arr[offset];
-                ++offset < limit && tmp<=(succ = arr[offset]);
+                ++offset < limit && tmp <= (succ = arr[offset]);
                 tmp = succ
             ) {}
             return offset;
