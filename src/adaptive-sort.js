@@ -85,10 +85,10 @@
             * such that all elements elA..elZ form a non-strict 
             * forward-ordered chain.
             */
-            var temp, succ;
-            for (temp = arr[offset];
-                ++offset < limit && temp<=(succ = arr[offset]);
-            temp = succ) {}
+            var tmp, succ;
+            for (tmp = arr[offset];
+                ++offset < limit && tmp<=(succ = arr[offset]);
+            tmp = succ) {}
             return offset;
         }
 
@@ -99,75 +99,85 @@
             * such that all elements elA..elZ form a strict 
             * reverse-ordered chain.
             */
-            var temp, succ;
-            for (temp = arr[offset];
-                ++offset < limit && (succ = arr[offset])<temp;
-            temp = succ) {}
+            var tmp, succ;
+            for (tmp = arr[offset];
+                ++offset < limit && (succ = arr[offset])<tmp;
+            tmp = succ) {}
             return offset;
         }
 
-        function sort(arr) {
-            var len = items.length;
-            if (len <= 1) {
-                return arr;
-            }
+        function chain_unit(arr) {
+            // Step 1: return an array of chain arrays
+            // expecting data in reverse order
+            var terminus,
+            len = arr.length,
+            tmp = [],
+            f = find_strict_rchain;
 
-            /*
-            * Step 1: split on chains
-            *
-            * Always expect data in reverse order with respect to the one specified
-            */
-
-            var k;
-            var temp = [];
-            var f = find_strict_rchain;
-            for (k = 0; k < len; k = term) {
+            for (var k = 0; k < len; k = terminus) {
                 // try to find a chain (ordered sequence of at least
                 // two elements) using a default function first:
 
-                var term = f(arr, k, len);
-                if (term - k > 1) {
-                    temp.push(f === find_strict_rchain ? arr.slice(k, term).reverse() : arr.slice(k, term));
+                terminus = f(arr, k, len);
+                if (terminus - k > 1) {
+                    tmp.push(
+                        (f === find_strict_rchain) 
+                        ? arr.slice(k, terminus).reverse() 
+                        : arr.slice(k, terminus)
+                    );
                 } else if (f === find_strict_rchain) {
                     /* searched for a reverse chain and found none:
                     * switch default function to forward and look 
                     * for a forward chain at k + 1: */
 
-                    term++;
-                    temp.push(arr.slice(k, term));
+                    terminus++;
+                    tmp.push(arr.slice(k, terminus));
                     f = find_fchain;
                 } else {
                     /* searched for a forward chain and found none:
                     * switch default function to reverse and look 
                     * for a reverse chain at k + 1: */
 
-                    term++;
-                    temp.push(arr.slice(k, term).reverse());
+                    terminus++;
+                    tmp.push(arr.slice(k, terminus).reverse());
                     f = find_strict_rchain;
                 }
             }
+            return tmp;
+        }
 
-            // Step 2: merge everything
-            //for (var j = temp.length; j > 1; temp.length = j) {
-            for (var j = temp.length; j > 1; ) {
-                var lim = j - 2;
-                // At this point, lim == temp.length - 2, so temp[k + 1]
+        function chain_join(tmp) {
+            // Step 2: join all chains
+            var len = tmp.length;
+            if (len == 0) {
+                return tmp;
+            }
+            //for (var j = tmp.length; j > 1; tmp.length = j) {
+            for (var j = len; j > 1; ) {
+                var k, lim = j - 2;
+                // At this point, lim == tmp.length - 2, so tmp[k + 1]
                 // is always defined for any k in [0, lim)
                 for (j = 0, k = 0; k < lim; k = j << 1) {
-                    temp[j++] = merge(temp[k], temp[k + 1]);
+                    tmp[j++] = merge(tmp[k], tmp[k + 1]);
                 }
                 // Last pair is special -- its treatment depends on the initial 
                 // parity of j, which is the same as the current parity of lim.
-                temp[j++] = (k > lim) ? temp[k] : merge(temp[k], temp[k + 1]);
+                tmp[j++] = (k > lim) ? tmp[k] : merge(tmp[k], tmp[k + 1]);
             }
-            var result = temp.shift();
-            temp.length = 0;
+            var result = tmp.shift();
+            tmp.length = 0;
             return result;
+        }
 
+        function sort(arr) {
 
-            //in-place (destructive) version:
-            //for (j = 0; j < len; j++) {
-            //    arr[j] = result[j];
+            // immutable version -- store result in a separate location
+            return chain_join(chain_unit(arr));
+
+            // mutable (standard) version -- store result in-place
+            //var result = chain_join(chain_unit(arr));
+            //for (k = 0; k < len; k++) {
+            //    arr[k] = result[k];
             //}
             //result.length = 0;
             //return arr;
