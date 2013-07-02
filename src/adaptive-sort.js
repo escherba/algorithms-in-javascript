@@ -148,12 +148,11 @@
 
         function chain_join(tmp) {
             // Step 2: join all chains
-            var len = tmp.length;
-            if (len == 0) {
-                return tmp;
-            }
-            //for (var j = tmp.length; j > 1; tmp.length = j) {
-            for (var j = len; j > 1; ) {
+            var j = tmp.length;
+            if (j == 0) { return tmp; }
+
+            //for (; j > 1; tmp.length = j) {
+            while (j > 1) {
                 var k, lim = j - 2;
                 // At this point, lim == tmp.length - 2, so tmp[k + 1]
                 // is always defined for any k in [0, lim)
