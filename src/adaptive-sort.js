@@ -181,7 +181,7 @@
             return result;
         }
 
-        // Initiate MergeSort on the input array.
+        // Initiate AdaptiveSort on the input array.
         //return aij.isSortable(items) ? sort(items) : items;
         return sort(items);
     };
