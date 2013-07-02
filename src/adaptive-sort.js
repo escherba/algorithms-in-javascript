@@ -25,7 +25,7 @@
         * performance should be close to optimal.
         */
 
-        function merge_chains(left, right) {
+        function destructive_merge(left, right) {
             /*
             * Given two ordered arrays (chains), returns a new 
             * array containing an ordered union of the input chains.
@@ -70,6 +70,11 @@
                     }
                 }
             }
+            //setting array length to zero effectively removes the array from
+            //memory (older versions of Firefox would leak unless these arrays
+            //were reset).
+            left.length = 0;
+            right.length = 0;
             return result;
         }
 
@@ -103,83 +108,77 @@
 
         function sort(arr) {
             var len = items.length;
-            if (len > 1) {
-                /*
-                * Step 1: split on chains
-                *
-                * Always expect data in reverse order with respect to the one specified
-                */
-
-                var f = find_strict_rchain;
-                for (var j = 0, k = 0; k < len; j++, k = term) {
-                    // try to find a chain (ordered sequence of at least
-                    // two elements) using a default function first:
-
-                    var term = f(arr, k, len);
-                    if (term - k > 1) {
-                        arr[j] = f === find_strict_rchain ? arr.slice(k, term).reverse() : arr.slice(k, term);
-                    } else if (f === find_strict_rchain) {
-                        /* searched for a reverse chain and found none:
-                        * switch default function to forward and look 
-                        * for a forward chain at k + 1: */
-
-                        /*arr[j] = term < len ? [arr[k], arr[term]] : [arr[k]];*/
-                        term++;
-                        arr[j] = arr.slice(k, term);
-                        f = find_fchain;
-                    } else {
-                        /* searched for a forward chain and found none:
-                        * switch default function to reverse and look 
-                        * for a reverse chain at k + 1: */
-
-                        /*arr[j] = term < len ? [arr[term], arr[k]] : [arr[k]];*/
-                        term++;
-                        arr[j] = arr.slice(k, term).reverse();
-                        f = find_strict_rchain;
-                    }
-                }
-
-                // Step 2: merge everything
-                for (; j > 1; j++) {
-                    var lim = j - 2;
-                    arr.length = j;
-                    // At this point, lim == arr.length - 2, so arr[k + 1]
-                    // is always defined for any k in [0, lim)
-                    var left, right;
-                    for (j = 0, k = 0; k < lim; j++, k += 2){
-                        left = arr[k];
-                        right = arr[k + 1];
-                        arr[j] = merge_chains(left, right);
-                        left.length = 0;
-                        right.length = 0;
-                        // Setting left and right array lengths to zero here is not
-                        // necessary, but doing so helps Firefox manage memory
-                    }
-                    // Last pair is special (treatment depends on the initial parity of j,
-                    // which is the same as the current parity of lim).
-                    if (k > lim) {
-                        // k === lim + 1: lim is odd, j was odd
-                        arr[j] = arr[k];
-                    } else {
-                        // k < lim + 1: lim is even, j was even
-                        left = arr[k]; 
-                        right = arr[k + 1];
-                        arr[j] = merge_chains(left, right);
-                        left.length = 0;
-                        right.length = 0;
-                    }
-                }
-                arr.length = 1;
-
-                // destructive version
-                arr = arr.shift();
-
-                // non-destructive version
-                //var subarray = arr.shift();
-                //arr.push.apply(arr, subarray);
-                //subarray.length = 0;
+            if (len <= 1) {
+                return arr;
             }
-            return arr;
+
+            /*
+            * Step 1: split on chains
+            *
+            * Always expect data in reverse order with respect to the one specified
+            */
+
+            var temp = [];
+            var f = find_strict_rchain;
+            for (var j = 0, k = 0; k < len; j++, k = term) {
+                // try to find a chain (ordered sequence of at least
+                // two elements) using a default function first:
+
+                var term = f(arr, k, len);
+                if (term - k > 1) {
+                    temp.push(f === find_strict_rchain ? arr.slice(k, term).reverse() : arr.slice(k, term));
+                } else if (f === find_strict_rchain) {
+                    /* searched for a reverse chain and found none:
+                    * switch default function to forward and look 
+                    * for a forward chain at k + 1: */
+
+                    /*arr[j] = term < len ? [arr[k], arr[term]] : [arr[k]];*/
+                    term++;
+                    temp.push(arr.slice(k, term));
+                    f = find_fchain;
+                } else {
+                    /* searched for a forward chain and found none:
+                    * switch default function to reverse and look 
+                    * for a reverse chain at k + 1: */
+
+                    /*arr[j] = term < len ? [arr[term], arr[k]] : [arr[k]];*/
+                    term++;
+                    temp.push(arr.slice(k, term).reverse());
+                    f = find_strict_rchain;
+                }
+            }
+
+            // Step 2: merge everything
+            for (var lim = j - 2; lim >= 0;) {
+                console.log(lim);
+                //temp.length = j;
+                // At this point, lim == arr.length - 2, so arr[k + 1]
+                // is always defined for any k in [0, lim)
+                for (k = 0; k < lim; k += 2){
+                    temp[k >> 1] = destructive_merge(temp[k], temp[k + 1]);
+                }
+                // Last pair is special (its treatment depends on the initial parity of j,
+                // which is the same as the current parity of lim).
+                var t = k >> 1;
+                if (k > lim) {
+                    // k === lim + 1: lim is odd, j was odd
+                    temp[t] = temp[k];
+                } else {
+                    // k < lim + 1: lim is even, j was even
+                    temp[t] = destructive_merge(temp[k], temp[k + 1]);
+                }
+                lim = t - 1;
+            }
+            //temp.length = 1;
+            var result = temp.shift();
+            temp.length = 0;
+
+            //in-place (destructive) version:
+            //for (j = 0; j < len; j++) {
+            //    arr[j] = result[j];
+            //}
+
+            return result;
         }
 
         // Initiate MergeSort on the input array.
