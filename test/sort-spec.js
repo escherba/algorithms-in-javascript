@@ -2,7 +2,7 @@
  * @fileoverview Tests for all sort algorithms.
  */
 
-var sortTypes = ['Bubble', 'Selection', 'Insertion', 'Merge', 'Quick', 'Adaptive'];
+var sortTypes = ['Bubble', 'Selection', 'Insertion', 'Merge', 'Quick', 'Adaptive', 'Quickmiddle'];
 
 for (var i = 0; i < sortTypes.length; i++) {
 
