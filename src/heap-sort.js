@@ -24,8 +24,8 @@
             arr[i - 1] = temp;
         }
 
-        var len = arr.length;
-        for (var i = len >> 1; i > 0; i--) {
+        var i, len = arr.length;
+        for (i = len >> 1; i > 0; i--) {
             siftdown(i, len);
         }
         for (i = len - 1; i > 0; i--) {
