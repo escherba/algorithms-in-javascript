@@ -16,8 +16,9 @@
         * 
         * Note: A stable sort algorithm, similar to merge sort except 
         * that it takes advantage of partially ordered "chains" (Donald 
-        * Knuth calls them "runs"). Performance is directly dependent on
-        * the amount of preexisting a* rtial ordering.
+        * Knuth refers to these structures as "runs"). Performance of this
+        * algorithm is directly dependent on the amount of preexisting 
+        * partial ordering.
         *
         * Time complexity: O(n) if array is already sorted, 
         * O(n.log(n)) in a worst case which should be rare.
