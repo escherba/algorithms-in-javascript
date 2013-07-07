@@ -14,7 +14,7 @@
         * Adaptive merge sort algorithm
         * Implementation: Eugene Scherba, 11/9/2010
         * 
-        * Note: A stable sort algorithm, similar to merge sort except 
+        * This is a stable sort algorithm, similar to merge sort except 
         * that it takes advantage of partially ordered "chains" (Donald 
         * Knuth refers to these structures as "runs"). Performance of this
         * algorithm is directly dependent on the amount of preexisting 
