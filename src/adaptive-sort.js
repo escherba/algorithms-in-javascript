@@ -14,18 +14,14 @@
         * Adaptive merge sort algorithm
         * Implementation: Eugene Scherba, 11/9/2010
         * 
-        * Note: Similar to merge sort but takes advantage of existing
-        * partial ordering in the form of "chains". Resources on
-        * adaptive (natural) and nonadaptive merge sort: 
-        * http://www.nczonline.net/blog/2009/01/27/speed-up-your-javascript-part-3/
-        * http://penguin.ewu.edu/~trolfe/NaturalMerge/NatMerge.html
+        * Note: A stable sort algorithm, similar to merge sort except 
+        * that it takes advantage of partially ordered "chains" (Donald 
+        * Knuth calls them "runs"). Performance is directly dependent on
+        * the amount of preexisting a* rtial ordering.
         *
-        * Stability: stable.
-        * Space complexity: O(n) in worst case, usually around O(n/2).
         * Time complexity: O(n) if array is already sorted, 
         * O(n.log(n)) in a worst case which should be rare.
-        * For partially-ordered or low-complexity arrays,
-        * performance should be close to optimal.
+        * Space complexity: O(n) in worst case, usually around O(n/2).
         */
 
         function merge(left, right) {
