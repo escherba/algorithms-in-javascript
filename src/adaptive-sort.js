@@ -154,7 +154,8 @@
             var j = tmp.length;
             if (j < 1) { return tmp; }
 
-            //while (j > 1) {
+            // note: we reduce the size of the array after each iteration,
+            // which is not really necessary (could be done at once at the end).
             for (; j > 1; tmp.length = j) {
                 var k, lim = j - 2;
                 // At this point, lim == tmp.length - 2, so tmp[k + 1]
@@ -167,7 +168,6 @@
                 tmp[j++] = (k > lim) ? tmp[k] : merge(tmp[k], tmp[k + 1]);
             }
             var result = tmp.shift();
-            //tmp.length = 0;
             return result;
         }
 
@@ -186,7 +186,6 @@
         }
 
         // Initiate AdaptiveSort on the input array.
-        //return aij.isSortable(items) ? sort(items) : items;
         return sort(items);
     };
 
