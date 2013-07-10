@@ -29,8 +29,8 @@
         * @return {number}
         */
         function partition(array, left, right) {
-            //var pivot = array[Math.floor((left + right) / 2)];
-            var pivot = array[(left + right) >> 1];
+            var pivot = array[Math.floor((left + right) / 2)];
+            //var pivot = array[(left + right) >> 1];
             while (left <= right) {
                 while (array[left] < pivot) { left++; }
                 while (array[right] > pivot) { right--; }
