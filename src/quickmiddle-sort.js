@@ -1,5 +1,7 @@
 (function(){
+    /*jshint bitwise: false*/
     "use strict";
+
     /**
     * Quicksort algorithm. It's with complexity O(n log(n)).
     * In this version of quicksort I use the middle element of the
@@ -27,19 +29,15 @@
         * @return {number}
         */
         function partition(array, left, right) {
-            var pivot = array[Math.floor((left + right) / 2)],
-            temp;
+            //var pivot = array[Math.floor((left + right) / 2)];
+            var pivot = array[(left + right) >> 1];
             while (left <= right) {
-                while (array[left] < pivot)
-                    left += 1;
-                while (array[right] > pivot)
-                    right -= 1;
+                while (array[left] < pivot) { left++; }
+                while (array[right] > pivot) { right--; }
                 if (left <= right) {
-                    temp = array[left];
-                    array[left] = array[right];
-                    array[right] = temp;
-                    left += 1;
-                    right -= 1;
+                    var temp = array[left];
+                    array[left++] = array[right];
+                    array[right--] = temp;
                 }
             }
             return left;
@@ -56,10 +54,12 @@
         */
         function quicksort(array, left, right) {
             var mid = partition(array, left, right);
-            if (left < mid - 1)
+            if (left <= mid) {
                 quicksort(array, left, mid - 1);
-            if (right > mid)
+            }
+            if (right > mid) {
                 quicksort(array, mid, right);
+            }
         }
 
         /**
