@@ -29,8 +29,7 @@
         * @return {number}
         */
         function partition(array, left, right) {
-            var pivot = array[Math.floor((left + right) / 2)];
-            //var pivot = array[(left + right) >> 1];
+            var pivot = array[(left + right) >> 1];
             while (left <= right) {
                 while (array[left] < pivot) { left++; }
                 while (array[right] > pivot) { right--; }
@@ -54,7 +53,7 @@
         */
         function quicksort(array, left, right) {
             var mid = partition(array, left, right);
-            if (left <= mid) {
+            if (left < mid - 1) {
                 quicksort(array, left, mid - 1);
             }
             if (right > mid) {
