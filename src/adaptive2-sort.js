@@ -1,4 +1,4 @@
-aij.adaptiveSort = (function(){
+aij.adaptive2Sort = (function(){
     /*jshint bitwise: false*/
     /*jshint noempty: false*/
 
