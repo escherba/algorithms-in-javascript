@@ -44,25 +44,25 @@ aij.adaptiveSort = (function(){
             * concatenation will not suffice to merge them. */
 
             result = new Array(left_len + right_len);
-            var i = 0, k = 0, h = 0;
+            var k = 0, h = 0;
             while (true) {
                 if (right_val < left_val) {
-                    result[i++] = right_val;
+                    result[k + h] = right_val;
                     if (++h < right_len) {
                         right_val = right[h];
                     } else {
                         while (k < left_len) {
-                            result[i++] = left[k++];
+                            result[k + h] = left[k++];
                         }
                         break;
                     }
                 } else {
-                    result[i++] = left_val;
+                    result[k + h] = left_val;
                     if (++k < left_len) {
                         left_val = left[k];
                     } else {
                         while (h < right_len) {
-                            result[i++] = right[h++];
+                            result[k + h] = right[h++];
                         }
                         break;
                     }

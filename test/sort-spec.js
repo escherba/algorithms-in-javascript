@@ -60,5 +60,22 @@ for (var i = 0; i < sortTypes.length; i++) {
         it('should sort an array', function() {
             expect(sort(unsortedTestArray)).toEqual(sortedTestArray);
         });
+
+        it('should sort 10 random arrays of different sizes', function() {
+            var numSamples = 10;
+            var maxSampleSize = 100;
+            var maxElement = 100000;
+            for (var j = 0; j < numSamples; j++) {
+                var size = (Math.random() * maxSampleSize) | 0;
+                var unsortedSample = new Array(size);
+                for (var i = 0; i < size; i++) {
+                    unsortedSample[i] = (Math.random() * maxElement) | 0;
+                }
+                var sortedSample = unsortedSample.clone().sort(function (a, b) {
+                    return a - b;
+                }); 
+                expect(sort(unsortedSample)).toEqual(sortedSample);
+            }
+        });
     });
 }
