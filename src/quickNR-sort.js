@@ -50,19 +50,17 @@
         */
         function sort(array) {
             var stack = [ array.length - 1, 0 ];
-            for (var i = 1; i > 0; i--) {
+            while (stack.length > 0) {
                 var left = stack.pop(),
                 right = stack.pop(),
                 mid = partition(array, left, right);
                 if (left < mid - 1) {
                     stack.push(mid - 1); // push right
                     stack.push(left);    // push left
-                    i++;
                 }
                 if (right > mid) {
                     stack.push(right); // push right
                     stack.push(mid);   // push left
-                    i++;
                 }
             }
             return array;
