@@ -39,14 +39,26 @@ aij.adaptiveSort = (function(){
             * arrays overlap by at least one element and simple
             * concatenation will not suffice to merge them. */
 
-            var total_len = left_len + right_len;
+            var left_val, right_val, total_len = left_len + right_len;
             result = new Array(total_len);
             for (var k = 0, h = 0; k + h < total_len; ) {
-                for (; k < left_len && (h >= right_len || left[k] <= right[h]); k++) {
-                    result[k + h] = left[k];
+                if (h < right_len) {
+                    for (right_val = right[h]; k < left_len && (left_val = left[k]) <= right_val; k++) {
+                        result[k + h] = left_val;
+                    }
+                } else {
+                    for (; k < left_len; k++) {
+                        result[k + h] = left[k];
+                    }
                 }
-                for (; h < right_len && (k >= left_len || right[h] < left[k]); h++) {
-                    result[k + h] = right[h];
+                if (k < left_len) {
+                    for (left_val = left[k]; h < right_len && (right_val = right[h]) < left_val; h++) {
+                        result[k + h] = right_val;
+                    }
+                } else {
+                    for (; h < right_len; h++) {
+                        result[k + h] = right[h];
+                    }
                 }
             }
         }
