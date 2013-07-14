@@ -26,7 +26,7 @@ aij.adaptiveSort = (function(){
 
     function merge(left, right) {
         /*
-        * Given two ordered arrays (chains), returns a new 
+        * Given two non-empty ordered arrays (chains), returns a new 
         * array containing an ordered union of the input chains.
         */
         var left_len = left.length,
