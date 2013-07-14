@@ -133,16 +133,14 @@
                     * switch default function to forward and look 
                     * for a forward chain at k + 1: */
 
-                    terminus++;
-                    tmp.push(arr.slice(k, terminus));
+                    tmp.push(arr.slice(k, ++terminus));
                     f = find_fchain;
                 } else {
                     /* searched for a forward chain and found none:
                     * switch default function to reverse and look 
                     * for a reverse chain at k + 1: */
 
-                    terminus++;
-                    tmp.push(arr.slice(k, terminus).reverse());
+                    tmp.push(arr.slice(k, ++terminus).reverse());
                     f = find_strict_rchain;
                 }
             }
