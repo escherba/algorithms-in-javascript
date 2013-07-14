@@ -41,7 +41,8 @@ aij.adaptive2Sort = (function(){
 
             var left_val, right_val, total_len = left_len + right_len;
             result = new Array(total_len);
-            for (var k = 0, h = 0; k + h < total_len; ) {
+            var k = 0, h = 0;
+            while (true) {
                 if (h < right_len) {
                     for (right_val = right[h]; k < left_len && (left_val = left[k]) <= right_val; k++) {
                         result[k + h] = left_val;
@@ -49,6 +50,9 @@ aij.adaptive2Sort = (function(){
                 } else {
                     for (; k < left_len; k++) {
                         result[k + h] = left[k];
+                    }
+                    if (h >= right_len) {
+                        break;
                     }
                 }
                 if (k < left_len) {
@@ -58,6 +62,9 @@ aij.adaptive2Sort = (function(){
                 } else {
                     for (; h < right_len; h++) {
                         result[k + h] = right[h];
+                    }
+                    if (k >= left_len) {
+                        break;
                     }
                 }
             }
