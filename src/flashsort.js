@@ -1,7 +1,7 @@
-(function(){
+aij.flashSort = (function(){
     /*jshint bitwise: false*/
     "use strict";
-    aij.flashSort = function( a ) {
+    return function( a ) {
         var n = a.length;
 
         var i = 0, j = 0, k = 0, t;

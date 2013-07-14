@@ -1,8 +1,8 @@
-(function(){
+aij.heapSort = (function(){
     /*jshint bitwise: false*/
     "use strict";
 
-    aij.heapSort = function(arr) {
+    return function(arr) {
 
         function siftdown(lower, upper) {
             var i = lower,

@@ -1,31 +1,19 @@
-(function(){
+aij.insertionSort = (function(){
     "use strict";
 
     /**
     * Sorts an array of integers using the InsertionSort algorithm.
     * @param {Array.<number>} items Array of items to be sorted.
     */
-    aij.insertionSort = function(items) {
-        var sort = function(arr) {
-            var length = arr.length;
-
-            for (var i = 0; i < length; i++) {
-                var j = i,
-                item = arr[j];
-
-                while(j > 0 && arr[j - 1] > item) {
-                    arr[j] = arr[j - 1];
-                    j--;
-                }
-
-                arr[j] = item;
+    return function(arr) {
+        for (var i = 0, len = arr.length; i < len; i++) {
+            var j = i, item = arr[j];
+            for(; j > 0 && arr[j - 1] > item; j--) {
+                arr[j] = arr[j - 1];
             }
-
-            return arr;
-        };
-
-        // Initiate InsertionSort on the input array.
-        //return aij.isSortable(items) ? sort(items) : items;
-        return sort(items);
+            arr[j] = item;
+        }
+        return arr;
     };
+
 })();
