@@ -1,4 +1,4 @@
-aij.adaptive2Sort = (function(){
+aij.adaptiveSort = (function(){
     /*jshint bitwise: false*/
     /*jshint noempty: false*/
 
@@ -26,44 +26,111 @@ aij.adaptive2Sort = (function(){
 
     function merge(left, right) {
         /*
-        * Given two ordered arrays (chains), returns a new 
+        * Given two non-empty ordered arrays (chains), returns a new 
         * array containing an ordered union of the input chains.
         */
-        var result, left_len = left.length, right_len = right.length;
-        if (left[left_len - 1] <= right[0]) {
+        var left_len = left.length,
+        right_len = right.length,
+        left_val,
+        right_val,
+        result,
+        i, k, h, imin, imid, imax;
+        if (left[left_len - 1] <= (right_val = right[0])) {
             result = left.concat(right);
-        } else if (right[right_len - 1] < left[0]) {
+        } else if (right[right_len - 1] < (left_val = left[0])) {
             result = right.concat(left);
+        } else if (left_val <= right_val) {
+            // left_val <= right_val
+            // use binary search to find the first left[i] > right_val
+            // then copy left from 0 to i - 1 into result
+            imin = 1, imax = left_len - 1;
+            while (imax >= imin) {
+                imid = imin + ((imax - imin) >> 1);
+                if (left[imid] <= right_val) {
+                    imin = imid + 1;
+                } else if (left[imid - 1] > right_val) {
+                    imax = imid - 1;
+                } else {
+                    // left[imid] > right_val && left[imid - 1] <= right_val
+                    break; // return imid
+                }
+            }
+            result = new Array(left_len + right_len);
+            for (i = 0; i < imid; i++) {
+                result[i] = left[i];
+            }
+
+            k = imid, h = 0;
+            left_val = left[k], right_val = right[h];
+            while (true) {
+                if (right_val < left_val) {
+                    result[k + h] = right_val;
+                    if (++h < right_len) {
+                        right_val = right[h];
+                    } else {
+                        while (k < left_len) {
+                            result[k + h] = left[k++];
+                        }
+                        break;
+                    }
+                } else {
+                    result[k + h] = left_val;
+                    if (++k < left_len) {
+                        left_val = left[k];
+                    } else {
+                        while (h < right_len) {
+                            result[k + h] = right[h++];
+                        }
+                        break;
+                    }
+                }
+            }
         } else {
+            // right_val < left_val
+            // use binary search to find the first right[i] >= left_val
+            // then copy right from 0 to i - 1 into result
+            //
+            imin = 1, imax = right_len - 1;
+            while (imax >= imin) {
+                imid = imin + ((imax - imin) >> 1);
+                if (right[imid] < left_val) {
+                    imin = imid + 1;
+                } else if (right[imid - 1] >= left_val) {
+                    imax = imid - 1;
+                } else {
+                    // right[imid] >= left_val && right[imid - 1] < left_val
+                    break; // return imid
+                }
+            }
+            result = new Array(left_len + right_len);
+            for (i = 0; i < imid; i++) {
+                result[i] = right[i];
+            }
             /* By this point, we know that the left and the right
             * arrays overlap by at least one element and simple
             * concatenation will not suffice to merge them. */
 
-            var left_val, right_val, total_len = left_len + right_len;
-            result = new Array(total_len);
-            var k = 0, h = 0;
+            k = 0, h = imid;
+            left_val = left[k], right_val = right[h];
             while (true) {
-                if (h < right_len) {
-                    for (right_val = right[h]; k < left_len && (left_val = left[k]) <= right_val; k++) {
-                        result[k + h] = left_val;
-                    }
-                } else {
-                    for (; k < left_len; k++) {
-                        result[k + h] = left[k];
-                    }
-                    if (h >= right_len) {
+                if (right_val < left_val) {
+                    result[k + h] = right_val;
+                    if (++h < right_len) {
+                        right_val = right[h];
+                    } else {
+                        while (k < left_len) {
+                            result[k + h] = left[k++];
+                        }
                         break;
                     }
-                }
-                if (k < left_len) {
-                    for (left_val = left[k]; h < right_len && (right_val = right[h]) < left_val; h++) {
-                        result[k + h] = right_val;
-                    }
                 } else {
-                    for (; h < right_len; h++) {
-                        result[k + h] = right[h];
-                    }
-                    if (k >= left_len) {
+                    result[k + h] = left_val;
+                    if (++k < left_len) {
+                        left_val = left[k];
+                    } else {
+                        while (h < right_len) {
+                            result[k + h] = right[h++];
+                        }
                         break;
                     }
                 }
