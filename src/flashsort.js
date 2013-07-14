@@ -46,10 +46,10 @@ aij.flashSort = (function(){
             while ( j > ( l[ k ] - 1 ) ) {
                 k = ~~( c1 * ( a[ ++j ] - anmin ) );
             }
-            flash = a[ j ];
-
-            // added 07/03/2013, ES
+            // line below added 07/03/2013, ES
             if (k < 0) { break; }
+
+            flash = a[ j ];
 
             while ( j !== l[ k ] ) {
                 k = ~~( c1 * ( flash - anmin ) );
