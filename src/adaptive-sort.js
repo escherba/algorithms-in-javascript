@@ -29,43 +29,24 @@ aij.adaptiveSort = (function(){
         * Given two ordered arrays (chains), returns a new 
         * array containing an ordered union of the input chains.
         */
-        var left_len = left.length,
-        right_len = right.length,
-        left_val,
-        right_val,
-        result;
-        if (left[left_len - 1] <= (right_val = right[0])) {
+        var result, left_len = left.length, right_len = right.length;
+        if (left[left_len - 1] <= right[0]) {
             result = left.concat(right);
-        } else if (right[right_len - 1] < (left_val = left[0])) {
+        } else if (right[right_len - 1] < left[0]) {
             result = right.concat(left);
         } else {
             /* By this point, we know that the left and the right
             * arrays overlap by at least one element and simple
             * concatenation will not suffice to merge them. */
 
-            result = new Array(left_len + right_len);
-            var k = 0, h = 0;
-            while (true) {
-                if (right_val < left_val) {
-                    result[k + h] = right_val;
-                    if (++h < right_len) {
-                        right_val = right[h];
-                    } else {
-                        while (k < left_len) {
-                            result[k + h] = left[k++];
-                        }
-                        break;
-                    }
-                } else {
-                    result[k + h] = left_val;
-                    if (++k < left_len) {
-                        left_val = left[k];
-                    } else {
-                        while (h < right_len) {
-                            result[k + h] = right[h++];
-                        }
-                        break;
-                    }
+            var total_len = left_len + right_len;
+            result = new Array(total_len);
+            for (var k = 0, h = 0; k + h < total_len; ) {
+                for (; k < left_len && (h >= right_len || left[k] <= right[h]); k++) {
+                    result[k + h] = left[k];
+                }
+                for (; h < right_len && (k >= left_len || right[h] < left[k]); h++) {
+                    result[k + h] = right[h];
                 }
             }
         }
