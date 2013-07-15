@@ -55,31 +55,36 @@ aij.adaptive2Sort = (function(){
                     break; // return imid
                 }
             }
-            result = new Array(left_len + right_len);
-            for (i = 0; i < imid; i++) {
-                result[i] = left[i];
-            }
+            //result = new Array(left_len + right_len);
+            //for (i = 0; i < imid; i++) {
+            //    result[i] = left[i];
+            //}
+            result = left.slice(0, imid);
 
             k = imid, h = 0;
             left_val = left[k], right_val = right[h];
             while (true) {
                 if (right_val < left_val) {
-                    result[k + h] = right_val;
+                    //result[k + h] = right_val;
+                    result.push(right_val);
                     if (++h < right_len) {
                         right_val = right[h];
                     } else {
                         while (k < left_len) {
-                            result[k + h] = left[k++];
+                            //result[k + h] = left[k++];
+                            result.push(left[k++]);
                         }
                         break;
                     }
                 } else {
-                    result[k + h] = left_val;
+                    //result[k + h] = left_val;
+                    result.push(left_val);
                     if (++k < left_len) {
                         left_val = left[k];
                     } else {
                         while (h < right_len) {
-                            result[k + h] = right[h++];
+                            //result[k + h] = right[h++];
+                            result.push(right[h++]);
                         }
                         break;
                     }
@@ -102,10 +107,12 @@ aij.adaptive2Sort = (function(){
                     break; // return imid
                 }
             }
-            result = new Array(left_len + right_len);
-            for (i = 0; i < imid; i++) {
-                result[i] = right[i];
-            }
+            //result = new Array(left_len + right_len);
+            //for (i = 0; i < imid; i++) {
+            //    result[i] = right[i];
+            //}
+            result = right.slice(0, imid);
+
             /* By this point, we know that the left and the right
             * arrays overlap by at least one element and simple
             * concatenation will not suffice to merge them. */
@@ -114,22 +121,26 @@ aij.adaptive2Sort = (function(){
             left_val = left[k], right_val = right[h];
             while (true) {
                 if (right_val < left_val) {
-                    result[k + h] = right_val;
+                    //result[k + h] = right_val;
+                    result.push(right_val);
                     if (++h < right_len) {
                         right_val = right[h];
                     } else {
                         while (k < left_len) {
-                            result[k + h] = left[k++];
+                            //result[k + h] = left[k++];
+                            result.push(left[k++]);
                         }
                         break;
                     }
                 } else {
-                    result[k + h] = left_val;
+                    //result[k + h] = left_val;
+                    result.push(left_val);
                     if (++k < left_len) {
                         left_val = left[k];
                     } else {
                         while (h < right_len) {
-                            result[k + h] = right[h++];
+                            //result[k + h] = right[h++];
+                            result.push(right[h++]);
                         }
                         break;
                     }
