@@ -28,7 +28,7 @@ aij.quickmiddleSort = (function(){
     * @return {number}
     */
     function partition(array, left, right) {
-        var pivot = array[(left + right) >> 1];
+        var pivot = array[(left + right) >>> 1];
         while (left <= right) {
             while (array[left] < pivot) { left++; }
             while (array[right] > pivot) { right--; }

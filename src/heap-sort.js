@@ -7,7 +7,7 @@ aij.heapSort = (function(){
         function siftdown(lower, upper) {
             var i = lower,
             c = lower,
-            lastindex = upper >> 1,
+            lastindex = upper >>> 1,
             temp = arr[i - 1];
 
             for (; c <= lastindex; i = c) {
@@ -25,7 +25,7 @@ aij.heapSort = (function(){
         }
 
         var i, len = arr.length;
-        for (i = len >> 1; i > 0; i--) {
+        for (i = len >>> 1; i > 0; i--) {
             siftdown(i, len);
         }
         for (i = len - 1; i > 0; i--) {

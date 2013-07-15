@@ -37,7 +37,7 @@ aij.heap3Sort = (function(){
   return function(ary) {
       // heapify
       var len = ary.length;
-      for (var start = (len >> 1) - 1; start >= 0; start--) {
+      for (var start = (len >>> 1) - 1; start >= 0; start--) {
           shiftDown(ary, start, len - 1);
       }
 
